@@ -32,6 +32,9 @@ def main():
             else:
                 st.error("Unknown function")
             return
+        except ValueError:
+            st.error("Invalid number format")
+            return
     
     st.title("Function Hub")
     
