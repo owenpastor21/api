@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Function Hub API</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px;
+        }
+        pre { 
+            background: #f4f4f4; 
+            padding: 10px; 
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Function Hub API</h1>
+    
+    <h2>API Documentation</h2>
+    
+    <h3>How to use the API:</h3>
+    
+    <h4>1. Addition</h4>
+    <pre>GET /api/add?a=5&b=3</pre>
+    
+    <h4>2. Multiplication</h4>
+    <pre>GET /api/multiply?a=4&b=2</pre>
+    
+    <h4>3. Raw Text</h4>
+    <pre>GET /api/raw?a=5&b=3</pre>
+    
+    <h3>Response Formats:</h3>
+    <ul>
+        <li>Add/Multiply: JSON response <code>{"result": number}</code></li>
+        <li>Raw: Plain text response</li>
+    </ul>
+</body>
+</html>
