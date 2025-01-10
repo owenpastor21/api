@@ -15,6 +15,24 @@ def main():
     query_params = st.experimental_get_query_params()
     
     if "function" in query_params:
+        # Hide all Streamlit elements for API calls
+        st.set_page_config(initial_sidebar_state="collapsed")
+        hide_streamlit_elements = """
+            <style>
+                #MainMenu {visibility: hidden;}
+                header {visibility: hidden;}
+                footer {visibility: hidden;}
+                .stDeployButton {display: none;}
+                .stToolbar {display: none;}
+                .stMarkdown {display: none;}
+                .stException {display: none;}
+                div[data-testid="stSidebarNav"] {display: none;}
+                .stApp {background-color: white;}
+                .appview-container {margin: 0; padding: 0;}
+            </style>
+        """
+        st.markdown(hide_streamlit_elements, unsafe_allow_html=True)
+        
         function_name = query_params["function"][0]
         try:
             a = float(query_params.get("a", [0])[0])
@@ -22,31 +40,47 @@ def main():
             
             if function_name == "add":
                 result = add_numbers(a, b)
-                st.json({"result": result})
+                st.write({"result": result})
             elif function_name == "multiply":
                 result = multiply_numbers(a, b)
-                st.json({"result": result})
+                st.write({"result": result})
             elif function_name == "raw":
                 result = get_raw_result(a, b)
-                st.text(result)  # This will return plain text instead of JSON
+                st.write(result)
             else:
                 st.error("Unknown function")
             return
         except ValueError:
             st.error("Invalid number format")
             return
-    
+
+    # Regular UI code here
     st.title("Function Hub")
     
-    st.header("Available Functions")
+    st.header("API Documentation")
     st.markdown("""
-    ### 1. Addition
-    Adds two numbers together
+    ### How to use the API:
     
-    ### 2. Multiplication
-    Multiplies two numbers together
+    1. **Addition**
+    ```
+    GET https://yourapp.streamlit.app/?function=add&a=5&b=3
+    ```
+    
+    2. **Multiplication**
+    ```
+    GET https://yourapp.streamlit.app/?function=multiply&a=4&b=2
+    ```
+    
+    3. **Raw Text**
+    ```
+    GET https://yourapp.streamlit.app/?function=raw&a=5&b=3
+    ```
+    
+    ### Response Formats:
+    - Add/Multiply: JSON response `{"result": number}`
+    - Raw: Plain text response
     """)
-    
+
     # Test section
     st.header("Test Functions")
     
@@ -70,7 +104,6 @@ def main():
             result = multiply_numbers(a, b)
             st.success(f"Result: {result}")
 
-    # Add new section to UI
     with st.expander("Test Raw Output"):
         col1, col2 = st.columns(2)
         with col1:
